@@ -17,29 +17,21 @@ class Move
   end
 
   def >(other_move)
-    if rock?
-      return true if other_move.scissors?
-      return false
-    elsif paper?
-      return true if other_move.rock?
-      return false
-    else scissors?
-      return true if other_move.paper?
-      return false
+    if (rock? && other_move.scissors?) ||
+       (paper? && other_move.rock?) ||
+       (scissors? && other_move.paper?)
+      return true
     end
+    false
   end
 
   def <(other_move)
-    if rock?
-      return true if other_move.paper?
-      return false
-    elsif paper?
-      return true if other_move.scissors?
-      return false
-    else scissors?
-      return true if other_move.rock?
-      return false
+    if (rock? && other_move.paper?) ||
+       (paper? && other_move.scissors?) ||
+       (scissors? && other_move.rock?)
+      return true
     end
+    false
   end
 
   def to_s
@@ -49,7 +41,7 @@ end
 
 class Player
   attr_accessor :move, :name
-  
+
   def initialize
     set_name
   end
@@ -57,7 +49,7 @@ end
 
 class Human < Player
   def set_name
-    n = '' 
+    n = ''
     loop do
       puts "Enter name!"
       n = gets.chomp
@@ -72,7 +64,7 @@ class Human < Player
     loop do
       puts "Please choose rock, paper, or scissors:"
       choice = gets.chomp
-      break if Move::VALUES.include? (choice)
+      break if Move::VALUES.include?(choice)
       puts "Sorry, invalid choice."
     end
     self.move = Move.new(choice)
@@ -98,7 +90,7 @@ class RPSgame
     @human = Human.new
     @computer = Computer.new
   end
-  
+
   def display_welcome_message
     puts "Welcome to Rock, Paper, Scissors!"
   end
@@ -107,39 +99,40 @@ class RPSgame
     puts "Thanks for playing Rock, Paper, Sissors. Good bye!"
   end
 
-  def display_winner
+  def display_moves
     puts "#{human.name} chose #{human.move}"
     puts "#{computer.name} chose #{computer.move}"
+  end
 
+  def display_winner
     if human.move > computer.move
       puts "#{human.name} won!"
-    elsif human.move <  computer.move
+    elsif human.move < computer.move
       puts "#{computer.name} won!"
     else
       puts "It's a tie!"
     end
-
   end
 
   def play_again?
     answer = nil
-    loop do 
+    loop do
       puts "Would you like to play again? (y/n)"
       answer = gets.chomp
       break if ['y', 'n'].include?(answer.downcase)
       puts "Sorry, must be y or n."
     end
 
-    return true if answer == 'y'
-    return false
-
+    return false if answer.downcase == 'n'
+    return true if answer.downcase == 'y'
   end
 
-  def play 
+  def play
     display_welcome_message
-    loop do 
+    loop do
       human.choose
       computer.choose
+      display_moves
       display_winner
       break unless play_again?
     end
@@ -148,4 +141,3 @@ class RPSgame
 end
 
 RPSgame.new.play
-
