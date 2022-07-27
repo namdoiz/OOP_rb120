@@ -1,14 +1,8 @@
 class Player
   attr_accessor :move, :name
   
-  def initialize(player_type = :human)
-    @player_type = player_type
-    @move = nil
+  def initialize
     set_name
-  end
-
-  def human?
-    @player_type == :human
   end
 end
 
