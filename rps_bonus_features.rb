@@ -155,9 +155,11 @@ end
 
 VALUES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 
-# A mixin module for the human and computer class that initializes new objects based on what move the user or computer makes.
-# depending on the choice, the move method the human and computer classes inherit from the Player class is set to the value the choice (which is the key) 
-# is set to
+# A mixin module for the human and computer class that initializes new objects
+# based on what move the user or computer makes.
+# depending on the choice, the move method the human and computer classes
+# inherit from the Player class is set to the value the choice
+# (which is the key)is set to
 
 module WhatMoveClass
   MOVES_HASH = {
@@ -294,7 +296,8 @@ class RPSgame
     self.game_mode = GAME_MODES[user_mode_answer]
   end
 
-  # Runs the mode the user wants to play depending on the answer from the ask_mode method
+  # Runs the mode the user wants to play depending on
+  # the answer from the ask_mode method
 
   def choose_mode
     puts "Playing #{game_mode}"
@@ -321,7 +324,6 @@ class RPSgame
       break unless play_again?
     end
   end
-
 
   # The first to 5 game mode
 
