@@ -20,8 +20,6 @@ module MoveInstanceVariables
   end
 end
 
-VALUES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-
 class Scissors
   include MoveInstanceVariables
   attr_reader :value
@@ -155,6 +153,12 @@ class Spock
   end
 end
 
+VALUES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+
+# A mixin module for the human and computer class that initializes new objects based on what move the user or computer makes.
+# depending on the choice, the move method the human and computer classes inherit from the Player class is set to the value the choice (which is the key) 
+# is set to
+
 module WhatMoveClass
   MOVES_HASH = {
     'scissors' => Scissors.new,
@@ -230,6 +234,7 @@ class RPSgame
   GAME_MODES = { 1 => "One at a time", 2 => "First to 5", 3 => "First to 10" }
   attr_accessor :human, :computer, :game_mode, :user_mode_answer
 
+  # Creation of human and computer objects
   def initialize
     system "clear"
     @human = Human.new
@@ -274,6 +279,8 @@ class RPSgame
     return true if answer.downcase == 'y'
   end
 
+  # Asks user what mode they want to play
+
   def ask_mode
     answer = nil
     loop do
@@ -286,6 +293,8 @@ class RPSgame
     self.user_mode_answer = answer
     self.game_mode = GAME_MODES[user_mode_answer]
   end
+
+  # Runs the mode the user wants to play depending on the answer from the ask_mode method
 
   def choose_mode
     puts "Playing #{game_mode}"
@@ -300,6 +309,8 @@ class RPSgame
     end
   end
 
+  # The one at a time game mode
+
   def one_at_a_time_mode
     loop do
       human.choose
@@ -310,6 +321,9 @@ class RPSgame
       break unless play_again?
     end
   end
+
+
+  # The first to 5 game mode
 
   def first_to_5_mode
     loop do
@@ -322,6 +336,8 @@ class RPSgame
       break if human.score == 5 || computer.score == 5
     end
   end
+
+  # The first to 10 game mode
 
   def first_to_10_mode
     loop do
@@ -392,4 +408,5 @@ class RPSgame
   end
 end
 
+# Main game initialization
 RPSgame.new.play
